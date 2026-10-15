@@ -23,7 +23,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps        # če Domenca FTPS ne podpira, spremenite v: ftp
-          server-dir: /public_html/   # ali ustrezna mapa na Domenci
+          server-dir: /   # FTP račun github@uzelac.si ima korensko mapo public_html
           exclude: |
             **/.git*
             **/.git*/**
