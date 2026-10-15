@@ -66,9 +66,55 @@ $headers = [
     'Content-Transfer-Encoding: 8bit',
 ];
 
-$sent = @mail($to, $subject, $body, implode("\r\n", $headers), '-f' . $to);
+$home = dirname($_SERVER['DOCUMENT_ROOT']);
+$log = $home . '/form-log.txt';
+function zapis($f, $m) { @file_put_contents($f, date('c') . ' ' . $m . "\n", FILE_APPEND); }
+
+// Pošiljanje prek SMTP s predalom na tem strežniku. Geslo je v datoteki ~/smtp-pass.txt (izven javne mape).
+function smtp_posli($to, $subject, $body, $replyTo, $pass, &$napaka) {
+    $ctx = stream_context_create(['ssl' => ['verify_peer' => false, 'verify_peer_name' => false]]);
+    $fp = @stream_socket_client('ssl://localhost:465', $en, $es, 10, STREAM_CLIENT_CONNECT, $ctx);
+    if (!$fp) { $napaka = "povezava: $es"; return false; }
+    stream_set_timeout($fp, 10);
+    $ukaz = function ($c, $ok) use ($fp, &$napaka) {
+        if ($c !== null) fwrite($fp, $c . "\r\n");
+        $r = '';
+        while (($l = fgets($fp, 512)) !== false) { $r .= $l; if (strlen($l) < 4 || $l[3] === ' ') break; }
+        if (strpos($r, (string)$ok) !== 0) { $napaka = trim($r); return false; }
+        return true;
+    };
+    $from = $to;
+    $dostavi = $ukaz(null, 220)
+        && $ukaz('EHLO uzelac.si', 250)
+        && $ukaz('AUTH LOGIN', 334)
+        && $ukaz(base64_encode($from), 334)
+        && $ukaz(base64_encode($pass), 235)
+        && $ukaz("MAIL FROM:<$from>", 250)
+        && $ukaz("RCPT TO:<$to>", 250)
+        && $ukaz('DATA', 354);
+    if ($dostavi) {
+        $msg = "From: Spletna stran <$from>\r\nTo: <$to>\r\nReply-To: $replyTo\r\nSubject: $subject\r\n"
+            . "Date: " . date('r') . "\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=UTF-8\r\n"
+            . "Content-Transfer-Encoding: 8bit\r\n\r\n"
+            . preg_replace('/^\./m', '..', str_replace("\n", "\r\n", $body)) . "\r\n.";
+        $dostavi = $ukaz($msg, 250);
+    }
+    @fwrite($fp, "QUIT\r\n");
+    @fclose($fp);
+    return $dostavi;
+}
+
+$sent = false;
+$pass = trim((string)@file_get_contents($home . '/smtp-pass.txt'));
+if ($pass !== '') {
+    $napaka = '';
+    $sent = smtp_posli($to, $subject, $body, $mail, $pass, $napaka);
+    if (!$sent) zapis($log, 'SMTP: ' . $napaka);
+}
 if (!$sent) {
-    $sent = @mail($to, $subject, $body, implode("\r\n", $headers));
+    $sent = @mail($to, $subject, $body, implode("\r\n", $headers), '-f' . $to);
+    if (!$sent) $sent = @mail($to, $subject, $body, implode("\r\n", $headers));
+    if (!$sent) zapis($log, 'mail() ni uspel');
 }
 
 if (!$sent) {
