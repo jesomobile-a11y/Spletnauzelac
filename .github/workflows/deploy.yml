@@ -1,10 +1,12 @@
 name: Deploy to Domenca FTP
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch: # omogoča tudi ročni zagon v zavihku Actions
+  # Samodejno nalaganje ob vsakem pushu je izklopljeno.
+  # Za vklop odstranite znak # pred vrsticami push in branches:
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch: # ročni zagon: Actions > Deploy to Domenca FTP > Run workflow
 
 jobs:
   web-deploy:
