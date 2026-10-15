@@ -102,9 +102,11 @@ input::placeholder,textarea::placeholder{color:#b1aca2}
 button.send:disabled{opacity:.55;cursor:default}
 .note{font-size:.75rem;color:var(--muted);margin-top:16px}
 footer{border-top:1px solid var(--line);padding:34px 0;font-size:.78rem;color:var(--muted)}
+.legal{max-width:760px;line-height:1.7}
 .privacy{width:100%;text-align:center;margin-top:8px;padding-top:18px;border-top:1px solid var(--line);line-height:1.7}
 .privacy strong{font-weight:500;color:var(--gold)}
-footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.areas .card p{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+footer .wrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
 .todo{background:#fff3cd;color:#6b5200;padding:0 4px}
 a.map{border-bottom:1px solid var(--gold-soft);transition:border-color 200ms ease,color 200ms ease}
 @media (hover:hover) and (pointer:fine){a.map:hover{color:var(--gold);border-bottom-color:var(--gold)}}
@@ -325,7 +327,7 @@ nav>:nth-child(5){animation-delay:540ms}
       <div class="card"><h3>Odškodninsko pravo</h3><p>Povračilo škode, nastale v različnih škodnih dogodkih (poslovna in neposlovna odškodninska odgovornost) ter vračilo neupravičeno pridobljene koristi.</p></div>
       <div class="card"><h3>Stvarno pravo</h3><p>Lastninska in druge pravice na stvareh (nepremičninah, premičninah in drugem).</p></div>
       <div class="card"><h3>Dedno pravo</h3><p>Pravice iz naslova zakonitega ali oporočnega dedovanja.</p></div>
-      <div class="card"><h3>Družinsko pravo</h3><p>Zakonski spori, razmerja med starši in otroci.</p></div>
+      <div class="card"><h3>Družinsko pravo</h3><p>Zakonski spori, razmerja med starši in otroki.</p></div>
       <div class="card"><h3>Delovno pravo in pravo socialne varnosti</h3><p>Pravice iz naslova delovnega razmerja ter iz naslova socialnih zavarovanj.</p></div>
       <div class="card"><h3>Izvršilno pravo</h3><p>Dolžniško-upniška razmerja ter (predhodno ali začasno) zavarovanje pravic.</p></div>
       <div class="card"><h3>Gospodarsko in insolvenčno pravo</h3><p>Pravo poslovnih subjektov ter pravo plačilne nesposobnosti.</p></div>
@@ -382,14 +384,12 @@ nav>:nth-child(5){animation-delay:540ms}
 
 <footer>
   <div class="wrap">
-    <div>© <span id="y"></span> Anja Uzelac, odvetnica · Matična št.: 2916428000 · Davčna št.: 30392489</div>
-    <div><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Cvetkova+ulica+17%2C+9000+Murska+Sobota" target="_blank" rel="noopener noreferrer">Cvetkova ulica 17, 9000 Murska Sobota</a></div>
+    <div class="legal">Odvetnica Anja Uzelac, Cvetkova ulica 17, 9000 Murska Sobota, matična številka: 2916428000, davčna številka: 30392489, poslovni račun: SI56 0400 0028 3291 933, odprt pri banki OTP banka d.d.</div>
     <div class="privacy"><strong>Zasebnost na prvem mestu:</strong> Ta spletna stran ne uporablja piškotkov in vam ne sledi. Zato na naši strani ne boste našli pasic za privolitev.</div>
   </div>
 </footer>
 
 <script>
-document.getElementById('y').textContent=new Date().getFullYear();
 var ov=document.getElementById('ov');
 document.getElementById('open').onclick=function(){ov.classList.add('open')};
 document.getElementById('close').onclick=function(){ov.classList.remove('open')};
