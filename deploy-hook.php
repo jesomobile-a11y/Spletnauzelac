@@ -5,7 +5,7 @@ $home = dirname($_SERVER['DOCUMENT_ROOT']);
 $repo = $home . '/repositories/spletna-stran';
 $web  = $_SERVER['DOCUMENT_ROOT'];
 $log  = $home . '/deploy-log.txt';
-$files = ['index.html', 'contact.php', 'licence-pisav.txt', 'deploy-hook.php'];
+$files = ['index.html', 'contact.php', 'licence-pisav.txt', 'deploy-hook.php', 'robots.txt', 'sitemap.xml'];
 
 function out($code, $msg) { http_response_code($code); header('Content-Type: text/plain'); echo $msg; exit; }
 function logit($f, $m) { @file_put_contents($f, date('c') . ' ' . $m . "\n", FILE_APPEND); }

@@ -6,3 +6,5 @@ deployment:
     - /bin/cp contact.php $DEPLOYPATH
     - /bin/cp licence-pisav.txt $DEPLOYPATH
     - /bin/cp deploy-hook.php $DEPLOYPATH
+    - /bin/cp robots.txt $DEPLOYPATH
+    - /bin/cp sitemap.xml $DEPLOYPATH
