@@ -380,6 +380,8 @@ nav>:nth-child(5){animation-delay:540ms}
       <textarea id="msg" name="msg" required maxlength="4000"></textarea>
       <label for="rok">Rok / narok (če obstaja)</label>
       <input id="rok" name="rok" maxlength="160" placeholder="npr. narok 5. 11. 2026 ob 9.00">
+      <label for="termin">Želeni termin sestanka (neobvezno)</label>
+      <input id="termin" name="termin" maxlength="160" placeholder="npr. torek, 20. 10. 2026, dopoldne">
       <div style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden" aria-hidden="true"><label for="web">Spletna stran</label><input id="web" name="web" tabindex="-1" autocomplete="off"></div>
       <div class="consent"><input type="checkbox" id="soglasje" name="soglasje" value="1" required><label for="soglasje">Strinjam se, da se moji podatki uporabijo za odgovor na povpraševanje.</label></div>
       <button class="send" type="submit">Pošlji povpraševanje</button>
@@ -415,7 +417,7 @@ ov.querySelectorAll('a').forEach(function(a){a.onclick=function(){ov.classList.r
     }).catch(function(){
       var n=(fd.get('ime')||'')+' '+(fd.get('priimek')||'');
       var s=encodeURIComponent('Povpraševanje – '+n);
-      var b=encodeURIComponent(['Ime in priimek: '+n,'Telefon: '+(fd.get('tel')||''),'E-pošta: '+(fd.get('mail')||''),'Rok / narok: '+(fd.get('rok')||'—'),'','Opis zadeve:',(fd.get('msg')||'')].join('\n'));
+      var b=encodeURIComponent(['Ime in priimek: '+n,'Telefon: '+(fd.get('tel')||''),'E-pošta: '+(fd.get('mail')||''),'Rok / narok: '+(fd.get('rok')||'—'),'Želeni termin: '+(fd.get('termin')||'—'),'','Opis zadeve:',(fd.get('msg')||'')].join('\n'));
       st.textContent='Sporočila ni bilo mogoče poslati prek obrazca. Odpira se vaš e-poštni program, lahko pa pišete tudi na info@uzelac.si.';
       location.href='mailto:info@uzelac.si?subject='+s+'&body='+b;
     }).then(function(){btn.disabled=false});

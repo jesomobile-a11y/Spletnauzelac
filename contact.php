@@ -35,6 +35,7 @@ $ime = enovrstica('ime');
 $priimek = enovrstica('priimek');
 $tel = enovrstica('tel');
 $rok = enovrstica('rok');
+$termin = enovrstica('termin');
 $soglasje = (string)($_POST['soglasje'] ?? '');
 $mail = trim((string)($_POST['mail'] ?? ''));
 $msg = trim((string)($_POST['msg'] ?? ''));
@@ -43,7 +44,7 @@ $msg = preg_replace('/[^\P{C}\n]+/u', '', str_replace("\r", '', $msg));
 if ($ime === '' || $priimek === '' || $tel === '' || $msg === '' || $soglasje !== '1' || !filter_var($mail, FILTER_VALIDATE_EMAIL)) {
     fail(422);
 }
-if (mb_strlen($ime) > 80 || mb_strlen($priimek) > 80 || mb_strlen($tel) > 40 || mb_strlen($rok) > 160
+if (mb_strlen($ime) > 80 || mb_strlen($priimek) > 80 || mb_strlen($tel) > 40 || mb_strlen($rok) > 160 || mb_strlen($termin) > 160
     || mb_strlen($mail) > 160 || mb_strlen($msg) > 4000) {
     fail(422);
 }
@@ -55,7 +56,8 @@ $subject = mb_encode_mimeheader('Povpraševanje prek spletne strani – ' . $ime
 $body = "Ime in priimek: $ime $priimek\n"
     . "Telefon: $tel\n"
     . "E-pošta: $mail\n"
-    . 'Rok / narok: ' . ($rok !== '' ? $rok : '—') . "\n\n"
+    . 'Rok / narok: ' . ($rok !== '' ? $rok : '—') . "\n"
+    . 'Želeni termin: ' . ($termin !== '' ? $termin : '—') . "\n\n"
     . "Opis zadeve:\n$msg\n";
 
 $headers = [
